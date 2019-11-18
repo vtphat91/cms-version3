@@ -1,21 +1,18 @@
 import React from "react"
 import { Link } from "gatsby"
-import LocalizedLink from "./localizedLink"
-import useTranslations from "./useTranslations"
 import  styles from '../pages/navigation.module.css'
-import get from 'lodash/get'
+import LocalizedLink from "./localizedLink"
 
-const Navigation = (props) => {
-  console.log('111111')
-  console.log(props)
-  const navigations = get(data, 'allContentfulNavigation.edges');
-  const urlLogoMirae = get(data, 'contentfulAsset.file.url');
+const Navigation = (data) => {
+  const navigations = data.navigations ;
+  const urlLogoMirae = data.urlLogoMirae;
   navigations.sort((a, b) => a.node.sort - b.node.sort);
-  navigations.forEach(navigation => {
+  //sort navigation
+  navigations.map(navigation => {
     if(!navigation && !navigation.node && !navigation.node.navigationChild && !navigation.node.navigationChild.sort){
       navigation.node.navigationChild.sort((a, b) => a.sort - b.sort);
     }
-
+  })
     return (
       <section className={styles.navBar}>
         <div className={styles.navContainer}>
@@ -29,7 +26,10 @@ const Navigation = (props) => {
               {navigations.map(navigation => (
                 <li key={navigation.node.id}>
                   <div className={styles.dropdown}>
-                    <Link to={`/${navigation.node.url}` } >{navigation.node.text}</Link>
+                    {/* <Link to={`/${navigation.node.url}` } >{navigation.node.text}</Link> */}
+                    <LocalizedLink to={`/${navigation.node.url}`}>
+                      {navigation.node.text}
+                    </LocalizedLink>
                     <div className={styles.dropdownContent}>
                       {navigation.node.navigationChild != null ? navigation.node.navigationChild.map(child => (
                           <Link to={`/${child.url}` } key={child.id} >{child.text}</Link>
@@ -43,7 +43,7 @@ const Navigation = (props) => {
         </div>
       </section>
     )
-  })
+ 
 }
 
 export default Navigation

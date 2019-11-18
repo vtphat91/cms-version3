@@ -12,6 +12,7 @@ module.exports = {
       defaultDescription: `Gatsby example site using MDX and dependency-free i18n`,
     },
     vi: {
+      default: false,
       path: `vi`,
       locale: `vi-VN`,
       dateFormat: `DD/MM/YYYY`,

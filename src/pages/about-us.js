@@ -2,17 +2,14 @@ import React from 'react'
 import { useStaticQuery ,graphql } from 'gatsby'
 import get from 'lodash/get'
 import './about-us.css'
-import NavigationPage from '../pages/navigation'
 
 const AboutUs = ({data}) => {
     
-    console.log(data);
     const title = get(data, 'contentfulAboutUs.title');
     const body = get(data, 'contentfulAboutUs.body');
     const bodyBoxContent = get(data, 'contentfulBoxContentBodyTextNode.childMarkdownRemark');
     return (
         <>
-            <NavigationPage />
             <section className="content_block clearfix wrapper">
                 <section className="content left ceo">
                     <h2 className="section-headline">{title}</h2>

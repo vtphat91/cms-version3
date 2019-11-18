@@ -12,7 +12,7 @@ exports.onCreatePage = ({ page, actions }) => {
   // So everything in src/pages/
   deletePage(page)
   // Grab the keys ('en' & 'de') of locales and map over them
-  console.log('--------------------onCreatePage-----------------------------------',page);
+  console.log('--------------------onCreatePage-----------------------------------');
   Object.keys(locales).map(lang => {
     // Use the values defined in "locales" to construct the path
     const localizedPath = locales[lang].default
@@ -33,6 +33,7 @@ exports.onCreatePage = ({ page, actions }) => {
         ...page.context,
         locale: locales[lang].locale, //get locale en-US, vi-VN
         dateFormat: locales[lang].dateFormat,
+        urlLang: locales[lang].path   //url language : en/vi /
       },
     })
   })
@@ -45,7 +46,8 @@ exports.onCreatePage = ({ page, actions }) => {
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
   // Check for "Mdx" type so that other files (e.g. images) are exluded
-  if (node.internal.type === `Mdx`) {
+  console.log('ALL NODE:',node);
+  if (node.internal.type === `Mdx` || node.internal.type === `SitePage`) {
     // Use path.basename
     // https://nodejs.org/api/path.html#path_path_basename_path_ext
     const name = path.basename(node.fileAbsolutePath, `.mdx`)
@@ -62,7 +64,6 @@ exports.onCreateNode = ({ node, actions }) => {
     // So grab the lang from that string
     // If it's the default language, pass the locale for that
     const lang = isDefault ? defaultKey : name.split(`.`)[1]
-    console.log('--------------------onCreateNode-----------------------------------');
     createNodeField({ node, name: `locale`, value: lang })
     createNodeField({ node, name: `isDefault`, value: isDefault })
   }
@@ -96,23 +97,19 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
 
   if (result.errors) {
-    console.error(result.errors)
+    //console.error(result.errors)
     return
   }
 
   const postList = result.data.blog.edges
-  console.log('--------------------createPages-----------------------------------');
   postList.forEach(({ node: post }) => {
     // All files for a blogpost are stored in a folder
     // relativeDirectory is the name of the folder
     const slug = post.relativeDirectory
-
     const title = post.childMdx.frontmatter.title
-
     // Use the fields created in exports.onCreateNode
     const locale = post.childMdx.fields.locale
     const isDefault = post.childMdx.fields.isDefault
-    
     createPage({
       path: localizedSlug({ isDefault, locale, slug }),
       component: postTemplate,
@@ -124,9 +121,6 @@ exports.createPages = async ({ graphql, actions }) => {
         title,
       },
     })
-
-
-    
   })
 
   const resultContentFul = await graphql(
@@ -147,16 +141,23 @@ exports.createPages = async ({ graphql, actions }) => {
     console.error(resultContentFul.errors)
     return
   }
-
+ 
   const templateProduct = path.resolve('./src/templates/product-content.js')
   const productContents = resultContentFul.data.allContentfulNavigationChild.edges
+  Object.keys(locales).map(lang => {
+
+  })
   productContents.forEach((content, index) => {
+    const slug = content.node.url;
+    const locale = content.node.node_locale.substring(0,2);
+    const isDefault = locale === 'en' ? true : false ;
     createPage({
-      path: `${content.node.url}`,
+      path: localizedSlug({ isDefault, locale, slug }),
       component: templateProduct,
       context: {
         url: content.node.url,
-        locale: content.node.node_locale
+        locale: content.node.node_locale,
+        urlLang: locales[locale].path
       },
     })
   })

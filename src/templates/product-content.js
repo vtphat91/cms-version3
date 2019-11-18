@@ -48,10 +48,9 @@ const ProductContent = ({data}) => {
   */
     const boxContent = get(data, 'contentfulBoxContentBodyTextNode.childMarkdownRemark');
     const post = get(data, 'contentfulNavigationChild.productContentRefer');
+    //console.log('boxContent',boxContent);
     if(post != null ){
       return (
-
-        <Layout>
           <section className="content_block clearfix wrapper">
               <section className="content left">
                 <h2 className="section-headline"></h2>
@@ -67,12 +66,9 @@ const ProductContent = ({data}) => {
                   }}/>
               </section>      
           </section>
-
-        </Layout>
         )
       }else{
         return (
-          <Layout>
             <section className="content_block clearfix wrapper">
               <section className="content left">
                <h2 className="section-headline"></h2>
@@ -85,7 +81,6 @@ const ProductContent = ({data}) => {
                   }}/>
               </section>      
            </section>
-        </Layout>
         )
       }
 
@@ -94,24 +89,24 @@ const ProductContent = ({data}) => {
 export default ProductContent;
 
 
-export const pageQuery123 = graphql`
-query ProductContentByUrl($url: String!) {
-  contentfulNavigationChild(url: {eq: $url}) {
-    productContentRefer {
-      title
-      body {
-        childMarkdownRemark {
-          html
+export const pageQueryProduct = graphql`
+    query ProductContentByUrl($url: String!) {
+        contentfulNavigationChild(url: {eq: $url}) {
+          productContentRefer {
+            title
+            body {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
         }
-      }
+        contentfulBoxContentBodyTextNode {
+          childMarkdownRemark {
+            html
+          }
+      } 
     }
-  }
-  contentfulBoxContentBodyTextNode {
-    childMarkdownRemark {
-      html
-    }
-} 
-}
-`
+    `
 
 
