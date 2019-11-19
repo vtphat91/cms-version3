@@ -19,7 +19,7 @@ const SelectLanguage = ({path}) => {
         {Object.keys(locales).map(lang => {
             if(locales[lang].default){
                 return (
-                    <Link to={`/${path}`}>
+                    <Link to={`/${path}`} key={`${path}`}>
                         <ReactCountryFlag 
                                     styleProps={{
                                     width: '30px',
@@ -32,7 +32,7 @@ const SelectLanguage = ({path}) => {
                 )
             }else {
                 return (
-                    <Link to={`vi/${path}`}>
+                    <Link to={`vi/${path}`} key={`vi/${path}`}>
                         <ReactCountryFlag 
                                     styleProps={{
                                     width: '30px',

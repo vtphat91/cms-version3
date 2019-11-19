@@ -295,6 +295,7 @@ button, input, select, textarea {
 
 .calculator-loan ul {
     margin: 0;
+    padding-left: 0px;
 }
 
 .loan-page ul li input[type="text"], .loan-page ul li select {

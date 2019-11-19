@@ -2,12 +2,12 @@ import React from 'react'
 import { useStaticQuery ,graphql } from 'gatsby'
 import get from 'lodash/get'
 import './about-us.css'
+import BoxContentPage from '../components/boxContent'
 
-const AboutUs = ({data}) => {
-    
+const AboutUs = ({data, pageContext: { locale}}) => {
+    console.log('locale',locale);
     const title = get(data, 'contentfulAboutUs.title');
     const body = get(data, 'contentfulAboutUs.body');
-    const bodyBoxContent = get(data, 'contentfulBoxContentBodyTextNode.childMarkdownRemark');
     return (
         <>
             <section className="content_block clearfix wrapper">
@@ -19,11 +19,7 @@ const AboutUs = ({data}) => {
                         }}/>
                 </section>  
                 <section className="sidebar right sticky fixed">
-                    <div
-                        dangerouslySetInnerHTML={{
-                            __html: bodyBoxContent.html,
-                        }}/>
-        
+                    <BoxContentPage locale={locale}/>
                 </section>      
             </section>
         </>    
@@ -43,10 +39,5 @@ query AboutUs($locale: String!) {
           }
         }
       }
-    contentfulBoxContentBodyTextNode {
-        childMarkdownRemark {
-          html
-        }
-    } 
 }
 `

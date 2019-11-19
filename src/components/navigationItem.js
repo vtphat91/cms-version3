@@ -16,7 +16,7 @@ const NavigationItem = ({navigations}) => {
                         {navigation.node.navigationChild != null ? navigation.node.navigationChild.map(child => (
                             // <Link to={`/${child.url}` } key={child.id} >{child.text}</Link>
                             <LocalizedLink to={`/${child.url}`} key={child.id}>
-                            {child.text}
+                                {child.text}
                             </LocalizedLink>
                         )):''}
                     </div>

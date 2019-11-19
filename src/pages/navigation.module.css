@@ -182,9 +182,9 @@ article {
   margin: 0;
 }
 
-.navBar a:hover, .dropdown:hover .dropbtn {
+/* .navBar .dropdown a:hover, .dropdown:hover .dropbtn {
   background-color: red;
-}
+} */
 
 .dropdownContent {
   display: none;
