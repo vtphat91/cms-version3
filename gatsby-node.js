@@ -144,9 +144,6 @@ exports.createPages = async ({ graphql, actions }) => {
  
   const templateProduct = path.resolve('./src/templates/product-content.js')
   const productContents = resultContentFul.data.allContentfulNavigationChild.edges
-  Object.keys(locales).map(lang => {
-
-  })
   productContents.forEach((content, index) => {
     const slug = content.node.url;
     const locale = content.node.node_locale.substring(0,2);

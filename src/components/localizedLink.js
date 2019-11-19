@@ -6,7 +6,6 @@ import locales from "../../config/i18n"
 // Use the globally available context to choose the right path
 const LocalizedLink = ({ to, ...props }) => {
   const { locale , urlLang } = React.useContext(LocaleContext)
-
   const isIndex = to === `/`
   //locale === 'en-US'
   //urlLang === 'en'

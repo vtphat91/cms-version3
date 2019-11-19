@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'gatsby'
 import base from './base.css'
 import Container from './container'
-import Navigation from '../pages/navigation'
+import Navigation from '../components/navigation'
 import Footer from '../components/footer'
 
 import { StaticQuery ,graphql } from 'gatsby'
@@ -10,7 +10,7 @@ import { StaticQuery ,graphql } from 'gatsby'
 
 const LocaleContext = React.createContext()
 
-const Layout = ({ children, pageContext: { locale , urlLang } }) => (
+const Layout = ({ children, pageContext: { locale , urlLang}, path }) => (
   <StaticQuery
       query={graphql`
       query SiteTitleQuery {
@@ -46,7 +46,7 @@ const Layout = ({ children, pageContext: { locale , urlLang } }) => (
         <LocaleContext.Provider value={{ locale, urlLang }}>
           <Container>
             <header className="global-header">
-              <Navigation navigations={navigations} urlLogoMirae={data.contentfulAsset.file.url} /> 
+              <Navigation navigations={navigations} urlLogoMirae={data.contentfulAsset.file.url} path={path} /> 
             </header>
             <main>{children}</main>
             <Footer />

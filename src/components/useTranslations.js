@@ -15,11 +15,8 @@ function useTranslations() {
       translations: item.node.translations,
     }
   })
-  console.log('LocaleContext',LocaleContext);
-  console.log('simplified',simplified);
-  console.log('translations',simplified.filter(lang => lang.name === locale));
   // Only return translations for the current locale
-  const { translations } = simplified.filter(lang => lang.name === locale)[0]
+  const { translations } = simplified.filter(lang => lang.name === locale.substring(0,2))[0]
   
   return translations
 }
