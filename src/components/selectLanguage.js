@@ -12,8 +12,9 @@ const styleFlagUs = {
     display: 'flex'
   }
 
-
+//example path : /about-us
 const SelectLanguage = ({path}) => {
+    path = path.replace(/\/|/g,"");
     return(
         <div style = {styleFlagUs}>
         {Object.keys(locales).map(lang => {
@@ -32,7 +33,7 @@ const SelectLanguage = ({path}) => {
                 )
             }else {
                 return (
-                    <Link to={`vi/${path}`} key={`vi/${path}`}>
+                    <Link to={`/vi/${path}`} key={`vi/${path}`}>
                         <ReactCountryFlag 
                                     styleProps={{
                                     width: '30px',

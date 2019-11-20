@@ -7,8 +7,6 @@ import MdxLink from "../components/mdxLink"
 // More info:
 // https://www.gatsbyjs.org/docs/mdx/customizing-components/
 const Post = ({ data: { mdx }, pageContext: { locale, title} }) => {
-  console.log('locale',locale)
-  console.log('title',title)
   return (<div className="blogpost">
   <h1>{mdx.frontmatter.title}</h1>
   <MDXRenderer

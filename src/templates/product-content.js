@@ -5,9 +5,7 @@ import BoxContentPage from '../components/boxContent'
 
 const ProductContent = ({data, pageContext: { locale}}) => {
 
-    const boxContent = get(data, 'contentfulBoxContentBodyTextNode.childMarkdownRemark');
     const post = get(data, 'contentfulNavigationChild.productContentRefer');
-    //console.log('boxContent',boxContent);
     if(post != null ){
       return (
           <section className="content_block clearfix wrapper">

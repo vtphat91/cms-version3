@@ -5,6 +5,7 @@ import locales from "../../config/i18n"
 
 // Use the globally available context to choose the right path
 const LocalizedLink = ({ to, ...props }) => {
+  to = to.replace(/\/|/g,"") ;
   const { locale , urlLang } = React.useContext(LocaleContext)
   const isIndex = to === `/`
   //locale === 'en-US'
@@ -18,8 +19,7 @@ const LocalizedLink = ({ to, ...props }) => {
   const path = locales[urlLang].default
     ? to
     : `${locales[urlLang].path}${isIndex ? `` : `${to}`}`
-
-  return <Link {...props} to={path} />
+  return <Link {...props} to={`/${path}`} />
 }
 
 export default LocalizedLink
