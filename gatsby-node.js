@@ -12,7 +12,6 @@ exports.onCreatePage = ({ page, actions }) => {
   // So everything in src/pages/
   deletePage(page)
   // Grab the keys ('en' & 'de') of locales and map over them
-  console.log('--------------------onCreatePage-----------------------------------');
   Object.keys(locales).map(lang => {
     // Use the values defined in "locales" to construct the path
     const localizedPath = locales[lang].default
@@ -46,7 +45,8 @@ exports.onCreatePage = ({ page, actions }) => {
 exports.onCreateNode = ({ node, actions }) => {
   const { createNodeField } = actions
   // Check for "Mdx" type so that other files (e.g. images) are exluded
-  if (node.internal.type === `Mdx` || node.internal.type === `SitePage`) {
+  
+  if (node.internal.type === `Mdx` && node.fileAbsolutePath) {
     // Use path.basename
     // https://nodejs.org/api/path.html#path_path_basename_path_ext
     const name = path.basename(node.fileAbsolutePath, `.mdx`)
@@ -96,7 +96,7 @@ exports.createPages = async ({ graphql, actions }) => {
   `)
 
   if (result.errors) {
-    //console.error(result.errors)
+    console.error(result.errors)
     return
   }
 
@@ -118,6 +118,7 @@ exports.createPages = async ({ graphql, actions }) => {
         // in different languages, e.g. because an english phrase is also common in german
         locale,
         title,
+        urlLang: locales[locale].path
       },
     })
   })

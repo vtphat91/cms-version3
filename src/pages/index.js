@@ -3,12 +3,11 @@ import { graphql } from "gatsby"
 import LocalizedLink from "../components/localizedLink"
 import useTranslations from "../components/useTranslations"
 
-const Index = ({ data: { allMdx } }) => {
+const Index = ({ data: { allMdx }, pageContext: { locale, dateFormat} }) => {
   // useTranslations is aware of the global context (and therefore also "locale")
   // so it'll automatically give back the right translations
 
   const { hello, subline } = useTranslations()
-
   return (
     <>
       <h1>{hello}</h1>
