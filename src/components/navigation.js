@@ -9,8 +9,7 @@ import NavigationItem from './navigationItem'
 const NavigationPage = (data) => {
   const { locale , urlLang } = React.useContext(LocaleContext) ;
   //xu ly cho chon ngon ngu
-  const path = data.path.includes(urlLang) ? data.path.replace(urlLang,'') : data.path ;
-
+  const path = data.path.includes(urlLang) ? data.path.replace(`/${urlLang}/`,'') : data.path ;
   const navigations = data.navigations ;
   const urlLogoMirae = data.urlLogoMirae;
   navigations.sort((a, b) => a.node.sort - b.node.sort);

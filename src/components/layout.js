@@ -11,7 +11,6 @@ const LocaleContext = React.createContext()
 const Layout = ({ children, pageContext: { locale , urlLang}, path }) => {
 
   const { navigationContent, logoMirae } = useStaticQuery(queryNavigation) ;
-   
   let navigations = navigationContent.edges;
   navigations = navigations.filter(data => data.node.node_locale === locale);
   return (

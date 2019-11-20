@@ -12,9 +12,10 @@ const styleFlagUs = {
     display: 'flex'
   }
 
-//example path : /about-us
 const SelectLanguage = ({path}) => {
-    path = path.replace(/\/|/g,"");
+    //fix path first /
+    if(path.charAt(0) === '/')
+        path = path.substr(1);
     return(
         <div style = {styleFlagUs}>
         {Object.keys(locales).map(lang => {

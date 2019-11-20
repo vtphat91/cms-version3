@@ -1,50 +1,49 @@
 import React from "react"
-
+import {Helmet} from "react-helmet";
 
 
 const NotFoundPage = () => {
-  // if (typeof window !== 'undefined') {
-  //   window.location = '/about-us';
-  // }
-  // return null;
+  if (typeof window !== 'undefined') {
+    window.location = '/about-us';
+  }
+  return null;
 
 
-  return (
-    <div className="not-found">
-        <Helmet htmlAttributes={{itemtype: 'notfound'}} >
-            <style>{`
-                h1 {
-                    font-family: 'Segoe UI Light';
-                    font-weight: 300;
-                    color: #fff;
-                }
+//   return (
+//     <div className="404 not-found">
+//             <style>{`
+//                 .404>h1 {
+//                     font-family: 'Segoe UI Light';
+//                     font-weight: 300;
+//                     color: #fff;
+//                 }
                 
-                html[itemtype='notfound'] body {
-                    font-family: 'Segoe UI';
-                    color: #fff;
-                    background: #008cff;
-                    margin: 0;
-                }
+//                 html[itemtype='notfound'] main {
+//                     font-family: 'Segoe UI';
+//                     color: #fff;
+//                     background: #008cff ;
+//                     margin: 0;
+//                 }
                 
-                .not-found main {
-                    margin: 4% 10%;
-                }
+              
                 
-                .emotion {
-                    font-size: 8em;
-                    margin: 0;
-                }
-            `}</style>
-        </Helmet>
-        <main>
-            <header>
-                <h1 className="emotion">:(</h1>
-            </header>
-            <p>Your PC ran into a problem and needs to restart. We're just collecting some error info, and then we'll restart for you.</p>
-            <p>100% complete</p>
-        </main>
-      </div>
-  )
+//                 h1 .emotion {
+//                     font-size: 8em;
+//                     margin: 0;
+//                     color: #fff;
+//                 }
+//                 .content {
+//                     background: #008cff ;
+//                     height : 340px;
+//                 }
+//             `}</style>
+//             <div className="content">
+//                 <h1 className="emotion">:(</h1>
+//                 <p>Page Not Found</p>
+//                 <p>100% complete</p>
+//             </div>
+//       </div>
+//   )
 
 
 
