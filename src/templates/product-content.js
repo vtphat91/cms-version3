@@ -41,8 +41,8 @@ export default ProductContent;
 
 
 export const pageQueryProduct = graphql`
-    query ProductContentByUrl($url: String!) {
-        contentfulNavigationChild(url: {eq: $url}) {
+    query ProductContentByUrl($url: String!, $locale: String!) {
+        contentfulNavigationChild(url: {eq: $url}, node_locale: {eq: $locale}) {
           productContentRefer {
             title
             body {
