@@ -74,6 +74,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const postTemplate = require.resolve(`./src/templates/post.js`)
 
+  //BLOG EXAMPLE
+
   const result = await graphql(`
     {
       blog: allFile(filter: { sourceInstanceName: { eq: "blog" } }) {
@@ -123,6 +125,8 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 
+  //PRODUCTS
+
   const resultContentFul = await graphql(
     `
       {
@@ -158,6 +162,51 @@ exports.createPages = async ({ graphql, actions }) => {
       },
     })
   })
+
+  //NEWS
+
+
+  const resultNews = await graphql(
+    `
+      {
+        allContentfulNews {
+          edges {
+            node {
+              slug
+              title
+              node_locale
+            }
+          }
+        }
+      }
+    `)
+
+  if (resultNews.errors) {
+    console.error(resultNews.errors)
+    return
+  }
+ 
+  const templateNews = path.resolve('./src/templates/news-content.js')
+  const newsContents = resultNews.data.allContentfulNews.edges
+  newsContents.forEach((content, index) => {
+    const slug = `news/${content.node.slug}` ;
+    const locale = content.node.node_locale.substring(0,2);
+    const isDefault = locale === 'en' ? true : false ;
+
+    createPage({
+      path: localizedSlug({ isDefault, locale, slug }),
+      component: templateNews,
+      context: {
+        slug: content.node.slug,
+        locale: content.node.node_locale,
+        urlLang: locales[locale].path
+      },
+    })
+  })
+
+
+
+
 }
 
 

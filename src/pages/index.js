@@ -1,52 +1,78 @@
 import React from "react"
-import { graphql } from "gatsby"
-import LocalizedLink from "../components/localizedLink"
-import useTranslations from "../components/useTranslations"
+import { useStaticQuery, graphql } from "gatsby"
 
-const Index = ({ data: { allMdx }, pageContext: { locale, dateFormat} }) => {
-  // useTranslations is aware of the global context (and therefore also "locale")
-  // so it'll automatically give back the right translations
+import Slideshow from '../components/slideshow';
+import './index.css';
 
-  const { hello, subline } = useTranslations()
+import ArticlePreview from '../components/article-preview'
+
+const Index = ({data}) => {
+
+  const {slideShow, newsContent} = data ;
+  let  images = [];
+  slideShow.edges.forEach(element => {
+    images.push(element.node);
+  });
+
+
   return (
-    <>
-      <h1>{hello}</h1>
-      <p>{subline}</p>
-      <hr style={{ margin: `2rem 0` }} />
-      <ul className="post-list">
-        {allMdx.edges.map(({ node: post }) => (
-          <li key={`${post.frontmatter.title}-${post.fields.locale}`}>
-            <LocalizedLink to={`/${post.parent.relativeDirectory}`}>
-              {post.frontmatter.title}
-            </LocalizedLink>
-            <div>{post.frontmatter.date}</div>
-          </li>
-        ))}
-      </ul>
-    </>
+      <>
+        <div className="App">
+          <Slideshow
+            input={images}
+            ratio={`16:9`}
+            mode={`automatic`}
+            timeout={`5000`}
+          />
+        </div>
+
+
+          <ul className="article-list">
+          {newsContent.edges.map(({ node }) => {
+            return (
+              <li key={node.slug}>
+                <ArticlePreview article={node} />
+              </li>
+            )
+          })}
+          </ul>
+      </>
   )
 }
 
 export default Index
 
-export const query = graphql`
-  query Index($locale: String!, $dateFormat: String!) {
-    allMdx(
-      filter: { fields: { locale: { eq: $locale } } }
-      sort: { fields: [frontmatter___date], order: DESC }
-    ) {
+export const querySlideShow = graphql`
+  query Index($locale: String!){
+    slideShow: allContentfulSlideShow(sort: {fields: order}, filter: {node_locale: {eq: $locale}}) {
       edges {
         node {
-          frontmatter {
-            title
-            date(formatString: $dateFormat)
+          caption
+          images {
+            fluid(quality: 100) {
+              ...GatsbyContentfulFluid
+            }
           }
-          fields {
-            locale
+          order
+          urlReference
+        }
+      }
+    }
+
+    newsContent: allContentfulNews(sort: {fields: createdAt, order: DESC} , filter: {node_locale: {eq: $locale}}) {
+      edges {
+        node {
+          slug
+          title
+          node_locale
+          article {
+            fluid(quality: 100) {
+              ...GatsbyContentfulFluid
+            }
           }
-          parent {
-            ... on File {
-              relativeDirectory
+          description {
+            childMarkdownRemark {
+              html
             }
           }
         }

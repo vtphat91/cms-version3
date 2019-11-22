@@ -25,7 +25,7 @@ const NavigationPage = (data) => {
           <SelectLanguage path={path} />
       <div className={styles.navContainer}>
         <div className={styles.brand}>
-          <a href="#"><img  src= {urlLogoMirae} /></a>
+          <a href="/"><img  src= {urlLogoMirae} /></a>
         </div>
         <nav>
           <div className={styles.navMobile}><a id="navToggle" href="#!"><span></span></a></div>
