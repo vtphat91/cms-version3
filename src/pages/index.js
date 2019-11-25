@@ -25,8 +25,7 @@ const Index = ({data}) => {
             timeout={`5000`}
           />
         </div>
-
-
+        <h2>Tin Tức Khuyến Mãi</h2>
           <ul className="article-list">
           {newsContent.edges.map(({ node }) => {
             return (
@@ -75,6 +74,7 @@ export const querySlideShow = graphql`
               html
             }
           }
+          createdAt(formatString: "DD/MM/YYYY")
         }
       }
     }
