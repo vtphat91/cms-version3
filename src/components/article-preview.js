@@ -7,7 +7,7 @@ export default ({ article }) => (
   <div >
     <small style={{color:'darkgray'}}>{article.createdAt}</small>
     {article.article && <Img style={{height:'200px'}} alt="News" fluid={article.article.fluid} />}
-    <h3 style={{fontSize: '1.15em', height:'50px', color: '#333', fontWeight: 'bold', lineHeight: '20px'}}>
+    <h3 style={{fontSize: '1.15em', height:'50px', color: '#333', fontWeight: 'inherit', lineHeight: '20px'}}>
       <LocalizedLink to={`/news/${article.slug}`} style={{textDecoration: 'none'}}>{article.title}</LocalizedLink>
     </h3>
     
